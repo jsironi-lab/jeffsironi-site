@@ -1,0 +1,287 @@
+---
+import Base from '../layouts/Base.astro';
+import Birds from '../components/Birds.astro';
+import DesertScene from '../components/DesertScene.astro';
+import { site, mailto } from '../site';
+
+const exploring = [
+  { text: 'How do we ensure AI is leveraged for the benefit of all humanity, and not just the billionaires?', color: 'var(--sky)' },
+  { text: 'How can analog media flourish in a hyper-digital age?', color: 'var(--orange)' },
+  { text: 'Can we redefine “success” as happiness and helping others — not titles or money?', color: 'var(--green)' },
+  { text: 'Every good thing, however small, helps tip the scales.', color: 'var(--yellow)' },
+];
+
+const openTo = [
+  { label: 'Full-time roles', color: 'var(--sky-soft)' },
+  { label: 'Fractional & project work', color: '#FDE3CC' },
+  { label: 'Advising', color: '#E2F1DC' },
+  { label: 'Board service', color: '#FDF1C8' },
+  { label: 'A good conversation', color: 'var(--sky-soft)' },
+];
+
+const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
+---
+
+<Base>
+  <Fragment slot="hero">
+    <section class="hero wrap">
+      <Birds />
+      <h1 class="hero-title">Hi, I’m Jeff.</h1>
+      <p class="hero-lede">
+        Welcome to my corner of the internet. I live in central Ohio with my family. I like helping people,
+        tinkering with things, trivia, and pizza.
+      </p>
+      <p class="hero-lede">
+        I use this space to experiment, collect projects I’m working on, and gather things that interest me.
+      </p>
+      <a href="#work" class="work-pill">Here about work? <span>Head this way →</span></a>
+    </section>
+    <DesertScene />
+  </Fragment>
+
+  <section class="about wrap" id="about">
+    <div class="about-photo">
+      <img src="/images/jeff-headshot.png" alt="Jeff Sironi smiling, arms crossed, in a gray plaid shirt" width="400" height="400" />
+    </div>
+    <div class="about-text">
+      <h2 class="section-title">A little about me.</h2>
+      <p>I enjoy helping people do cool things, big and small.</p>
+      <p>
+        Throughout my life, I’ve benefited from a handful of amazing people who believed in me more than I believed
+        in myself. They’re a big reason I care so much about helping other people now.
+      </p>
+      <p>
+        Currently, I’m in a very fortunate place where I can pick and choose the projects I’m working on. It’s
+        important to me that my work have meaning and impact.
+      </p>
+    </div>
+  </section>
+
+  <section class="exploring">
+    <div class="wrap">
+      <h2 class="section-title">A few things I’m exploring.</h2>
+      <div class="exploring-grid">
+        {exploring.map((item) => (
+          <p class="exploring-tile" style={`background: ${item.color}`}>{item.text}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="projects wrap" id="projects">
+    <h2 class="section-title">Things I make.</h2>
+    <p class="projects-sub">Side projects, for the joy of it.</p>
+    <div class="projects-grid">
+      <a href="/mixtapes" class="project-card">
+        <span class="project-bar" style="background: var(--orange)" aria-hidden="true"></span>
+        <span class="project-name">Mixtapes →</span>
+        <span class="project-desc">
+          Playlists made for people, moods and moments. My favorite part is playing someone a song they’ve never
+          heard and watching them love it.
+        </span>
+      </a>
+      <div class="project-card is-soon">
+        <span class="project-bar" style="background: var(--green)" aria-hidden="true"></span>
+        <span class="project-name">From the woodshop</span>
+        <span class="project-desc">Coming later.</span>
+      </div>
+      <div class="project-card is-soon">
+        <span class="project-bar" style="background: var(--blue)" aria-hidden="true"></span>
+        <span class="project-name">Photography</span>
+        <span class="project-desc">Coming later.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="work wrap" id="work">
+    <div class="work-card">
+      <div class="work-main">
+        <h2 class="section-title">Let’s work together.</h2>
+        <p>
+          I help organizations build the teams, programs and systems that make new things work, especially where
+          people, learning and technology meet. If you’re working on something meaningful, I’d love to hear about it.
+        </p>
+        <p class="open-label">I’m open to:</p>
+        <div class="chips">
+          {openTo.map((chip) => <span class="chip" style={`background: ${chip.color}`}>{chip.label}</span>)}
+        </div>
+      </div>
+      <div class="booking">
+        <h3>Book a meeting</h3>
+        <p>A no-pressure, 30-minute chat. Pick a time that works for you.</p>
+        <a class="btn btn-navy" href={bookingHref}>Find a time →</a>
+        <a class="btn btn-outline" href={site.linkedin}>My background on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-inner">
+      <div>
+        <h2 class="contact-title">Say hi. Pizza optional.</h2>
+        <p>Recommend a song, a slice or a book. Or tell me what you’re working on.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-navy" href={mailto('Hi Jeff')}>Email me</a>
+        <a class="btn btn-outline" href={site.linkedin}>LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; padding-top: 72px; }
+  .hero-title {
+    position: relative;
+    font-weight: 800;
+    font-size: clamp(56px, 9vw, 120px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .hero-lede { position: relative; margin: 24px 0 0; max-width: 46ch; font-size: 22px; }
+  .hero-lede + .hero-lede { margin-top: 16px; }
+  .work-pill {
+    position: relative;
+    margin-top: 32px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    background: #FFFFFF;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 12px 14px 12px 22px;
+    border-radius: 999px;
+    border: 2px solid var(--ink);
+  }
+  .work-pill span { background: var(--accent); color: #FFFFFF; border-radius: 999px; padding: 4px 14px; }
+  .work-pill:hover { color: var(--ink); }
+  .work-pill:hover span { background: var(--accent-hover); }
+
+  .about {
+    padding-top: 96px;
+    padding-bottom: 88px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    align-items: center;
+  }
+  .about-photo {
+    flex: 0 0 280px;
+    height: 340px;
+    border-radius: 140px 140px 20px 20px;
+    background: var(--blue);
+    overflow: hidden;
+  }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+  .about-text { flex: 1 1 460px; }
+  .about-text h2 { margin-bottom: 20px; }
+  .about-text p { margin: 0 0 16px; max-width: 58ch; }
+
+  .exploring { background: var(--navy); color: var(--on-navy); }
+  .exploring .wrap { padding-top: 88px; padding-bottom: 88px; }
+  .exploring h2 { margin-bottom: 32px; }
+  .exploring-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .exploring-tile {
+    margin: 0;
+    color: var(--ink);
+    border-radius: 20px;
+    padding: 26px 28px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  .projects { padding-top: 96px; padding-bottom: 96px; }
+  .projects-sub { margin: 12px 0 32px; color: var(--ink-soft); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .project-card {
+    background: #FFFFFF;
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.15s ease;
+  }
+  a.project-card:hover { transform: translateY(-3px); color: var(--ink); }
+  .project-card.is-soon { border-style: dashed; border-color: #9AA6BC; color: var(--ink-muted); }
+  .project-bar { height: 10px; width: 64px; border-radius: 999px; }
+  .project-name { font-family: var(--font-display); font-weight: 800; font-size: 28px; }
+  .project-desc { color: var(--ink-soft); }
+
+  .work { padding-bottom: 96px; }
+  .work-card {
+    background: #FFFFFF;
+    border: 3px solid var(--ink);
+    border-radius: 28px;
+    padding: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px 56px;
+  }
+  .work-main { flex: 1 1 460px; }
+  .work-main h2 { margin-bottom: 16px; }
+  .work-main p { margin: 0 0 22px; max-width: 54ch; }
+  .work-main .open-label { margin-bottom: 10px; font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .booking {
+    flex: 1 1 300px;
+    align-self: flex-start;
+    background: var(--sky);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .booking h3 { font-weight: 800; font-size: 28px; line-height: 1.1; }
+  .booking p { margin: 0 0 6px; }
+
+  .contact { background: var(--yellow); }
+  .contact-inner {
+    padding-top: 88px;
+    padding-bottom: 88px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .contact-inner > div:first-child { flex: 1 1 460px; }
+  .contact-title {
+    margin-bottom: 16px;
+    font-weight: 800;
+    font-size: clamp(40px, 5.4vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .contact-inner p { margin: 0; max-width: 44ch; }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+  @media (max-width: 640px) {
+    .hero { padding-top: 40px; }
+    .hero-lede { font-size: 19px; }
+    .work-pill {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 15px;
+      padding: 8px 8px 8px 16px;
+      white-space: nowrap;
+    }
+    .about { padding-top: 64px; padding-bottom: 64px; }
+    .about-photo { flex-basis: 100%; max-width: 280px; }
+    .exploring .wrap, .projects, .contact-inner { padding-top: 64px; padding-bottom: 64px; }
+    .exploring-tile { font-size: 21px; }
+    .work { padding-bottom: 64px; }
+    .work-card { padding: 28px 22px; border-radius: 22px; }
+    .booking { padding: 24px; }
+  }
+</style>

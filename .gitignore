@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.claude/settings.local.json
+# Files from the old, pre-Astro version of the site
+/assets/

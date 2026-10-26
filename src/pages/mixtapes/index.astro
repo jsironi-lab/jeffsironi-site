@@ -1,0 +1,272 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { mailto } from '../../site';
+
+const colors = {
+  orange: 'var(--orange)',
+  yellow: 'var(--yellow)',
+  green: 'var(--green)',
+  blue: 'var(--blue)',
+  sky: 'var(--sky)',
+};
+
+const entries = (await getCollection('mixtapes')).sort((a, b) => b.data.number - a.data.number);
+const tapes = await Promise.all(
+  entries.map(async (entry) => {
+    const { Content } = await entry.render();
+    const code = `JMT-${String(entry.data.number).padStart(3, '0')}`;
+    const embed = entry.data.spotify.replace('open.spotify.com/', 'open.spotify.com/embed/').split('?')[0];
+    return { ...entry.data, Content, code, id: code.toLowerCase(), embed, color: colors[entry.data.color] };
+  }),
+);
+const latestId = tapes[0]?.id;
+---
+
+<Base title="Mixtapes · Jeff Sironi" description="Mixtapes from Jeff Sironi: playlists made for people, moods and moments.">
+  <section class="mix-hero wrap" slot="hero">
+    <div class="mix-hero-text">
+      <p class="kicker">Projects · Mixtapes</p>
+      <h1 class="mix-title">Mixtapes.</h1>
+      <p class="mix-lede">
+        Playlists made for people, moods and moments. My favorite part is playing someone a song they’ve never heard
+        and watching them love it.
+      </p>
+      <p class="mix-sub">New tapes whenever the mood strikes. Each one is numbered, because that’s how mixtapes work.</p>
+    </div>
+    <div class="tape-wrap">
+      <button type="button" class="tape" aria-label="Flip the tape to side 2" data-tape-flip>
+        <img class="tape-front" src="/images/tape-side-1.png" width="1800" height="1152"
+          alt="Hand-drawn cassette labeled Jeff Jamz presents Mind the Groove, a mixtape, side 1" />
+        <img class="tape-back" src="/images/tape-side-2.png" width="1800" height="1152" alt="" />
+      </button>
+      <span class="tape-hint">Hover over the tape to flip it</span>
+    </div>
+  </section>
+
+  <section class="shelf wrap" aria-labelledby="shelf-title">
+    <div class="shelf-head">
+      <h2 class="section-title" id="shelf-title">The shelf.</h2>
+      <p>Pick a tape to see what’s on it.</p>
+    </div>
+    <div class="shelf-grid">
+      {tapes.map((tape) => (
+        <button
+          type="button"
+          class="shelf-card"
+          data-tape={tape.id}
+          aria-controls="now-playing"
+          aria-pressed={tape.id === latestId ? 'true' : 'false'}
+        >
+          <span class="spine" style={`background: ${tape.color}`} aria-hidden="true"></span>
+          <span class="shelf-body">
+            <span class="shelf-meta">
+              <span>{tape.code} · {tape.tracks.length} tracks</span>
+              <span class="now-tag">Now playing</span>
+            </span>
+            <span class="shelf-title">{tape.title}</span>
+            <span class="shelf-blurb">{tape.blurb}</span>
+          </span>
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="detail" id="now-playing" aria-live="polite">
+    {tapes.map((tape) => (
+      <div class="detail-panel wrap" data-panel={tape.id} id={tape.id} hidden={tape.id !== latestId}>
+        <div class="detail-main">
+          <p class="detail-kicker">
+            {tape.id === latestId ? 'Latest tape' : 'From the shelf'} · {tape.code} · {tape.tracks.length} tracks
+          </p>
+          <h2 class="section-title">{tape.title}.</h2>
+          <div class="detail-note"><tape.Content /></div>
+          <iframe
+            class="player"
+            title={`Spotify player: ${tape.title}`}
+            src={tape.embed}
+            height="352"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          ></iframe>
+          <div class="detail-actions">
+            <a class="btn btn-yellow" href={tape.spotify}>Listen on Spotify</a>
+            {tape.appleMusic
+              ? <a class="btn btn-outline" href={tape.appleMusic}>Listen on Apple Music</a>
+              : <span class="btn btn-ghost-navy">Apple Music: soon</span>}
+          </div>
+        </div>
+        <ol class="tracklist">
+          {tape.tracks.map((track, i) => (
+            <li>
+              <span class="track-n">{String(i + 1).padStart(2, '0')}</span>
+              <span>{track.title} <span class="track-artist">· {track.artist}</span></span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+  </section>
+
+  <section class="recs">
+    <div class="wrap recs-inner">
+      <div>
+        <h2 class="recs-title">Got a song I need to hear?</h2>
+        <p>Send it my way. It might end up on the next tape.</p>
+      </div>
+      <a class="btn btn-navy" href={mailto('A song you need to hear')}>Send a recommendation</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .mix-hero {
+    padding-top: 56px;
+    padding-bottom: 88px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 64px;
+    align-items: center;
+  }
+  .mix-hero-text { flex: 1 1 440px; }
+  .mix-title { font-weight: 800; font-size: clamp(56px, 9vw, 112px); line-height: 0.95; letter-spacing: -0.03em; }
+  .mix-lede { margin: 24px 0 0; max-width: 44ch; font-size: 20px; }
+  .mix-sub { margin: 14px 0 0; max-width: 44ch; color: var(--ink-soft); }
+
+  .tape-wrap { flex: 1 1 360px; max-width: 500px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .tape {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transform: rotate(-4deg);
+  }
+  .tape img { width: 100%; height: auto; filter: drop-shadow(0 18px 26px rgba(24, 40, 80, 0.28)); }
+  .tape-back { position: absolute; inset: 0; visibility: hidden; transform: rotate(9deg) translate(2%, 1%); }
+  .tape:hover .tape-back, .tape.is-flipped .tape-back { visibility: visible; }
+  .tape:hover .tape-front, .tape.is-flipped .tape-front { visibility: hidden; }
+  .tape-hint { font-size: 15px; font-weight: 600; color: var(--ink-soft); }
+
+  .shelf { padding-top: 88px; padding-bottom: 64px; }
+  .shelf-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .shelf-head p { margin: 0; color: var(--ink-soft); font-weight: 600; }
+  .shelf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .shelf-card {
+    display: flex;
+    padding: 0;
+    text-align: left;
+    font: inherit;
+    color: var(--ink);
+    background: #FFFFFF;
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .shelf-card:hover { transform: translateY(-3px); }
+  .shelf-card[aria-pressed='true'] { box-shadow: 8px 8px 0 var(--navy); }
+  .spine { flex: 0 0 22px; }
+  .shelf-body { flex: 1; padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; }
+  .shelf-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+  .now-tag {
+    display: none;
+    background: var(--navy);
+    color: #FFFFFF;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 13px;
+  }
+  .shelf-card[aria-pressed='true'] .now-tag { display: inline-block; }
+  .shelf-title { font-family: var(--font-hand); font-size: 28px; line-height: 1.2; }
+  .shelf-blurb { color: var(--ink-soft); font-size: 16px; }
+
+  .detail { background: var(--navy); color: var(--on-navy); scroll-margin-top: 16px; }
+  .detail-panel { padding-top: 80px; padding-bottom: 80px; display: flex; flex-wrap: wrap; gap: 40px 56px; }
+  .detail-panel[hidden] { display: none; }
+  .detail-main { flex: 1 1 380px; min-width: 0; }
+  .detail-kicker {
+    margin: 0 0 8px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: var(--yellow);
+  }
+  .detail-main h2 { margin-bottom: 12px; }
+  .detail-note { color: var(--on-navy-muted); max-width: 46ch; margin-bottom: 24px; }
+  .detail-note :global(p) { margin: 0 0 12px; }
+  .player { display: block; width: 100%; border: 0; border-radius: 12px; }
+  .detail-actions { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .tracklist { flex: 1 1 420px; list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--navy-line); }
+  .tracklist li { display: flex; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--navy-line); }
+  .track-n { flex: 0 0 28px; color: var(--yellow); font-weight: 600; }
+  .track-artist { color: var(--on-navy-muted); }
+
+  .recs { background: var(--yellow); }
+  .recs-inner {
+    padding-top: 72px;
+    padding-bottom: 72px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .recs-inner > div { flex: 1 1 420px; }
+  .recs-title { font-weight: 800; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .recs-inner p { margin: 0; max-width: 44ch; }
+
+  @media (max-width: 640px) {
+    .mix-hero { padding-top: 32px; padding-bottom: 56px; }
+    .shelf { padding-top: 56px; }
+    .shelf-grid { grid-template-columns: 1fr; }
+    .detail-panel { padding-top: 56px; padding-bottom: 56px; }
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLButtonElement>('[data-tape]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-panel]');
+  const detail = document.getElementById('now-playing');
+
+  function select(id: string, opts: { scroll?: boolean } = {}) {
+    if (!document.querySelector(`[data-panel="${id}"]`)) return;
+    cards.forEach((card) => card.setAttribute('aria-pressed', String(card.dataset.tape === id)));
+    panels.forEach((panel) => { panel.hidden = panel.dataset.panel !== id; });
+    history.replaceState(null, '', `#${id}`);
+    if (opts.scroll && detail && detail.getBoundingClientRect().top > window.innerHeight * 0.6) {
+      detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  cards.forEach((card) => card.addEventListener('click', () => select(card.dataset.tape!, { scroll: true })));
+
+  const fromHash = location.hash.slice(1);
+  if (fromHash) select(fromHash);
+
+  // Hover flips the tape with CSS; a tap or click flips it on touch screens and for keyboard users.
+  const tape = document.querySelector<HTMLButtonElement>('[data-tape-flip]');
+  tape?.addEventListener('click', () => {
+    const flipped = tape.classList.toggle('is-flipped');
+    tape.setAttribute('aria-label', flipped ? 'Flip the tape to side 1' : 'Flip the tape to side 2');
+  });
+</script>

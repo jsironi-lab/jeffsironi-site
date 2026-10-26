@@ -1,0 +1,49 @@
+---
+import NavBar from '../components/NavBar.astro';
+import { site } from '../site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = site.name,
+  description = 'Jeff Sironi’s corner of the internet: helping people do cool things, mixtapes, and things that interest me.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL('/images/jeff-headshot.png', Astro.site)} />
+  <meta name="theme-color" content="#A8D5F7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;600&family=Permanent+Marker&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="sky">
+    <NavBar />
+    <slot name="hero" />
+  </div>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>{site.name} · {site.location}</span>
+      <a href="/#work">Work with me</a>
+    </div>
+  </footer>
+</body>
+</html>
