@@ -10,7 +10,7 @@ const colors = {
   sky: 'var(--sky)',
 };
 
-const entries = (await getCollection('mixtapes')).sort((a, b) => b.data.number - a.data.number);
+const entries = (await getCollection('mixtapes')).sort((a, b) => a.data.number - b.data.number);
 const tapes = await Promise.all(
   entries.map(async (entry) => {
     const { Content } = await entry.render();
@@ -19,7 +19,7 @@ const tapes = await Promise.all(
     return { ...entry.data, Content, code, id: code.toLowerCase(), embed, color: colors[entry.data.color] };
   }),
 );
-const latestId = tapes[0]?.id;
+const latestId = tapes.at(-1)?.id;
 ---
 
 <Base title="Mixtapes · Jeff Sironi" description="Mixtapes from Jeff Sironi: playlists made for people, moods and moments.">

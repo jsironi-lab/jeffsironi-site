@@ -13,7 +13,10 @@ const links = [
 ---
 
 <header class="site-header wrap">
-  <a href="/" class="site-name">{site.name}</a>
+  <a href="/" class="site-name">
+    {site.name}
+    <img class="pizza" src="/images/pizza-mark.png" alt="" width="238" height="200" />
+  </a>
   <nav class="site-nav" aria-label="Main">
     {links.map((link) => (
       <a href={link.href} aria-current={link.current ? 'page' : undefined}>{link.label}</a>

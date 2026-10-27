@@ -2,7 +2,10 @@
 import Base from '../layouts/Base.astro';
 import Birds from '../components/Birds.astro';
 import DesertScene from '../components/DesertScene.astro';
+import { getCollection } from 'astro:content';
 import { site, mailto } from '../site';
+
+const latestTapes = (await getCollection('mixtapes')).sort((a, b) => b.data.number - a.data.number).slice(0, 3);
 
 const exploring = [
   { text: 'How do we ensure AI is leveraged for the benefit of all humanity, and not just the billionaires?', color: 'var(--sky)' },
@@ -41,7 +44,7 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
 
   <section class="about wrap" id="about">
     <div class="about-photo">
-      <img src="/images/jeff-headshot.png" alt="Jeff Sironi smiling, arms crossed, in a gray plaid shirt" width="400" height="400" />
+      <img src="/images/jeff-profile.jpg" alt="Jeff Sironi in a navy suit, smiling, sitting in a leather armchair" width="270" height="360" />
     </div>
     <div class="about-text">
       <h2 class="section-title">A little about me.</h2>
@@ -72,14 +75,17 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
     <h2 class="section-title">Things I make.</h2>
     <p class="projects-sub">Side projects, for the joy of it.</p>
     <div class="projects-grid">
-      <a href="/mixtapes" class="project-card">
+      <div class="project-card">
         <span class="project-bar" style="background: var(--orange)" aria-hidden="true"></span>
-        <span class="project-name">Mixtapes →</span>
-        <span class="project-desc">
-          Playlists made for people, moods and moments. My favorite part is playing someone a song they’ve never
-          heard and watching them love it.
-        </span>
-      </a>
+        <a href="/mixtapes" class="project-name">Mixtapes →</a>
+        <span class="project-desc">Playlists made for people, moods and moments.</span>
+        <p class="latest-label">Latest tapes</p>
+        <ul class="arrow-list latest-list">
+          {latestTapes.map((tape) => (
+            <li><a href={`/mixtapes#jmt-${String(tape.data.number).padStart(3, '0')}`}>{tape.data.title}</a></li>
+          ))}
+        </ul>
+      </div>
       <div class="project-card is-soon">
         <span class="project-bar" style="background: var(--green)" aria-hidden="true"></span>
         <span class="project-name">From the woodshop</span>
@@ -164,18 +170,17 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
   }
   .about-photo {
     flex: 0 0 280px;
-    height: 340px;
+    height: 360px;
     border-radius: 140px 140px 20px 20px;
     background: var(--blue);
     overflow: hidden;
   }
-  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 20%; }
   .about-text { flex: 1 1 460px; }
   .about-text h2 { margin-bottom: 20px; }
   .about-text p { margin: 0 0 16px; max-width: 58ch; }
 
-  .exploring { background: var(--navy); color: var(--on-navy); }
-  .exploring .wrap { padding-top: 88px; padding-bottom: 88px; }
+  .exploring .wrap { padding-bottom: 96px; }
   .exploring h2 { margin-bottom: 32px; }
   .exploring-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
   .exploring-tile {
@@ -189,7 +194,7 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
     line-height: 1.3;
   }
 
-  .projects { padding-top: 96px; padding-bottom: 96px; }
+  .projects { padding-bottom: 96px; }
   .projects-sub { margin: 12px 0 32px; color: var(--ink-soft); }
   .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
   .project-card {
@@ -202,12 +207,22 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
     gap: 8px;
     color: var(--ink);
     text-decoration: none;
-    transition: transform 0.15s ease;
   }
-  a.project-card:hover { transform: translateY(-3px); color: var(--ink); }
   .project-card.is-soon { border-style: dashed; border-color: #9AA6BC; color: var(--ink-muted); }
   .project-bar { height: 10px; width: 64px; border-radius: 999px; }
-  .project-name { font-family: var(--font-display); font-weight: 800; font-size: 28px; }
+  .project-name { font-family: var(--font-display); font-weight: 800; font-size: 28px; color: var(--ink); text-decoration: none; }
+  a.project-name:hover { color: var(--accent-hover); }
+  .latest-label {
+    margin: 10px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .latest-list { gap: 6px; font-weight: 600; font-size: 16px; }
+  .latest-list a { color: var(--ink); text-decoration: none; }
+  .latest-list a:hover { color: var(--accent-hover); text-decoration: underline; }
   .project-desc { color: var(--ink-soft); }
 
   .work { padding-bottom: 96px; }
@@ -238,10 +253,8 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
   .booking h3 { font-weight: 800; font-size: 28px; line-height: 1.1; }
   .booking p { margin: 0 0 6px; }
 
-  .contact { background: var(--yellow); }
   .contact-inner {
-    padding-top: 88px;
-    padding-bottom: 88px;
+    padding-bottom: 104px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -283,7 +296,7 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
     }
     .about { padding-top: 64px; padding-bottom: 64px; }
     .about-photo { flex-basis: 100%; max-width: 280px; }
-    .exploring .wrap, .projects, .contact-inner { padding-top: 64px; padding-bottom: 64px; }
+    .exploring .wrap, .projects, .contact-inner { padding-bottom: 64px; }
     .exploring-tile { font-size: 21px; }
     .work { padding-bottom: 64px; }
     .work-card { padding: 28px 22px; border-radius: 22px; }

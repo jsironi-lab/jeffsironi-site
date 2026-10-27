@@ -1,12 +1,37 @@
 ---
-// Sun, mesas and ground band that close out the sky-blue hero.
+// Sun, layered mesas and ground that close out the sky-blue hero. Layers further back are paler,
+// and they drift at different speeds as the page scrolls (unless reduced motion is on).
+const layers = [
+  { depth: 0.3, fill: '#AFC9EC', d: 'M0 150 L120 150 L150 110 L300 110 L330 140 L520 140 L560 92 L700 92 L740 140 L980 140 L1010 118 L1180 118 L1210 150 L1440 150 L1440 300 L0 300 Z' },
+  { depth: 0.2, fill: '#F7CDA6', d: 'M0 190 L220 190 L250 152 L400 152 L430 190 L840 190 L870 160 L1000 160 L1030 190 L1440 190 L1440 300 L0 300 Z' },
+  { depth: 0.12, fill: 'var(--orange)', d: 'M0 222 L80 222 L110 186 L260 186 L290 222 L620 222 L650 196 L760 196 L790 222 L1150 222 L1180 182 L1320 182 L1350 222 L1440 222 L1440 300 L0 300 Z' },
+  { depth: 0.05, fill: 'var(--green)', d: 'M0 252 L420 252 L450 222 L560 222 L590 252 L980 252 L1010 236 L1200 236 L1230 252 L1440 252 L1440 300 L0 300 Z' },
+];
 ---
 
 <div class="desert" aria-hidden="true">
-  <svg viewBox="0 0 1440 260" preserveAspectRatio="xMaxYMax slice">
-    <circle cx="1100" cy="130" r="80" fill="var(--yellow)" />
-    <path d="M0 170 L180 170 L210 104 L360 104 L390 170 L620 170 L650 132 L760 132 L790 170 L1440 170 L1440 260 L0 260 Z" fill="var(--orange)" />
-    <path d="M0 206 L420 206 L450 150 L560 150 L590 206 L980 206 L1010 178 L1200 178 L1230 206 L1440 206 L1440 260 L0 260 Z" fill="var(--green)" />
-    <path d="M0 234 L1440 234 L1440 260 L0 260 Z" fill="var(--navy)" />
+  <svg viewBox="0 0 1440 300" preserveAspectRatio="xMaxYMax slice">
+    <circle data-depth="0.4" cx="1060" cy="118" r="78" fill="var(--yellow)" />
+    {layers.map((layer) => <path data-depth={layer.depth} d={layer.d} fill={layer.fill} />)}
+    <path d="M0 278 L1440 278 L1440 300 L0 300 Z" fill="var(--navy)" />
   </svg>
 </div>
+
+<script>
+  const parts = document.querySelectorAll<SVGElement>('.desert [data-depth]');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let queued = false;
+
+  function drift() {
+    queued = false;
+    const y = still.matches ? 0 : Math.min(window.scrollY, 900);
+    parts.forEach((part) => {
+      part.style.transform = `translateY(${y * Number(part.dataset.depth) * 0.25}px)`;
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!queued) { queued = true; requestAnimationFrame(drift); }
+  }, { passive: true });
+  drift();
+</script>

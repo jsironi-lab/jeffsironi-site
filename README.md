@@ -27,4 +27,4 @@ Then open http://localhost:4321.
 ## Adding a mixtape
 
 Copy one of the files in `src/content/mixtapes/`, give it the next number, and update the fields.
-The newest number shows first and is marked "Latest tape".
+Tapes sit on the rack in number order, and the newest one is shown by default as "Latest tape".

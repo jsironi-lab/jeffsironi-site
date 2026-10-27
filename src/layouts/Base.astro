@@ -1,6 +1,6 @@
 ---
 import NavBar from '../components/NavBar.astro';
-import { site } from '../site';
+import { site, mailto } from '../site';
 import '../styles/global.css';
 
 interface Props {
@@ -23,7 +23,7 @@ const {
   <meta name="description" content={description} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={new URL('/images/jeff-headshot.png', Astro.site)} />
+  <meta property="og:image" content={new URL('/images/jeff-profile.jpg', Astro.site)} />
   <meta name="theme-color" content="#A8D5F7" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,11 +39,43 @@ const {
     <slot />
   </main>
 
+  <div class="horizon" aria-hidden="true">
+    <img class="peek" src="/images/jeff-sketch.png" alt="" width="900" height="1117" loading="lazy" />
+    <svg viewBox="0 0 1440 260" preserveAspectRatio="xMinYMax slice">
+      <path d="M0 182 L1000 182 L1030 146 L1250 146 L1280 166 L1440 166 L1440 260 L0 260 Z" fill="#AFC9EC" />
+      <path d="M0 182 L300 182 L330 152 L520 152 L550 182 L980 182 L1010 164 L1160 164 L1190 182 L1440 182 L1440 260 L0 260 Z" fill="var(--orange)" />
+      <path d="M0 212 L640 212 L670 190 L860 190 L890 212 L1440 212 L1440 260 L0 260 Z" fill="var(--green)" />
+      <path d="M0 238 L1440 238 L1440 260 L0 260 Z" fill="var(--navy-deep)" />
+    </svg>
+  </div>
+
   <footer class="site-footer">
-    <div class="wrap">
-      <span>{site.name} · {site.location}</span>
-      <a href="/#work">Work with me</a>
+    <div class="wrap footer-main">
+      <div class="footer-about">
+        <a href="/" class="site-name">
+          {site.name}
+          <img class="pizza" src="/images/pizza-mark-cream.png" alt="" width="238" height="200" />
+        </a>
+        <p>My little corner of the internet.<br />{site.location}</p>
+      </div>
+      <nav class="footer-col" aria-label="Projects">
+        <p class="footer-label">Projects</p>
+        <ul class="arrow-list">
+          <li><a href="/mixtapes">Mixtapes</a></li>
+          <li><span>From the woodshop <em>(soon)</em></span></li>
+          <li><span>Photography <em>(soon)</em></span></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Get in touch">
+        <p class="footer-label">Say hi</p>
+        <ul class="arrow-list">
+          <li><a href={mailto('Hi Jeff')}>Email</a></li>
+          <li><a href={site.linkedin}>LinkedIn</a></li>
+          <li><a href={site.bookingUrl || '/#work'}>Book a meeting</a></li>
+        </ul>
+      </nav>
     </div>
+    <div class="wrap footer-base">© {new Date().getFullYear()} {site.name}</div>
   </footer>
 </body>
 </html>
