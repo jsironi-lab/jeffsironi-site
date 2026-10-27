@@ -2,7 +2,7 @@
 export const site = {
   name: 'Jeff Sironi',
   location: 'Central Ohio',
-  email: 'jsironi@gmail.com',
+  email: 'hello@jeffsironi.com',
   linkedin: 'https://www.linkedin.com/in/jeffsironi/',
   // Paste a Cal.com, Calendly or Google Calendar booking link here.
   // Until then, "Find a time" opens an email instead.
