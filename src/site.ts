@@ -4,9 +4,8 @@ export const site = {
   location: 'Central Ohio',
   email: 'hello@jeffsironi.com',
   linkedin: 'https://www.linkedin.com/in/jeffsironi/',
-  // Paste a Cal.com, Calendly or Google Calendar booking link here.
-  // Until then, "Find a time" opens an email instead.
-  bookingUrl: '',
+  // Booking page for "Find a time". Leave empty to open an email instead.
+  bookingUrl: 'https://calendar.app.google/X91jwJz8WVuU2aSUA',
 };
 
 export const mailto = (subject: string) =>
