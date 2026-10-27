@@ -117,10 +117,7 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
 
   <section class="contact" id="contact">
     <div class="wrap contact-inner">
-      <div>
-        <h2 class="contact-title">Say hi. Pizza optional.</h2>
-        <p>Recommend a song, a slice or a book. Or tell me what you’re working on.</p>
-      </div>
+      <h2 class="contact-title">Say hi.</h2>
       <div class="contact-actions">
         <a class="btn btn-navy" href={mailto('Hi Jeff')}>Email me</a>
         <a class="btn btn-outline" href={site.linkedin}>LinkedIn</a>
@@ -249,19 +246,16 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
     padding-bottom: 88px;
     display: flex;
     flex-wrap: wrap;
-    gap: 32px;
-    align-items: flex-end;
+    gap: 24px 32px;
+    align-items: center;
     justify-content: space-between;
   }
-  .contact-inner > div:first-child { flex: 1 1 460px; }
   .contact-title {
-    margin-bottom: 16px;
     font-weight: 800;
     font-size: clamp(40px, 5.4vw, 72px);
     line-height: 1;
     letter-spacing: -0.02em;
   }
-  .contact-inner p { margin: 0; max-width: 44ch; }
   .contact-actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
   @media (max-width: 640px) {
