@@ -150,15 +150,15 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
 /* Footer: the page fades back into sky, with a pen-drawn Jeff peeking over the desert */
 .horizon {
   position: relative;
-  height: 260px;
+  height: 200px;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--cream) 0%, #CFE8FB 40%, var(--sky) 100%);
+  background: linear-gradient(180deg, var(--cream) 0%, #CFE8FB 45%, var(--sky) 100%);
 }
 .horizon svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .peek {
   position: absolute;
   left: 9%;
-  top: 86px;
+  top: 14px;
   width: 150px;
   height: auto;
   transform: rotate(-6deg);
@@ -199,8 +199,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
   :root { --gutter: 20px; }
   body { font-size: 17px; }
   .desert { height: 180px; margin-top: 40px; }
-  .horizon { height: 200px; }
-  .peek { width: 110px; top: 58px; left: 6%; }
+  .peek { width: 110px; top: 44px; left: 6%; }
   .site-name .pizza { height: 30px; }
   .site-nav { gap: 0 20px; }
 }
