@@ -86,15 +86,16 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
           ))}
         </ul>
       </div>
-      <div class="project-card is-soon">
-        <span class="project-bar" style="background: var(--green)" aria-hidden="true"></span>
-        <span class="project-name">From the woodshop</span>
-        <span class="project-desc">Coming later.</span>
-      </div>
-      <div class="project-card is-soon">
+      <div class="project-card">
         <span class="project-bar" style="background: var(--blue)" aria-hidden="true"></span>
-        <span class="project-name">Photography</span>
-        <span class="project-desc">Coming later.</span>
+        <span class="project-name">Vibe coding</span>
+        <span class="project-desc">
+          Small tools, games and experiments I build with AI. This website is one of them.
+        </span>
+        <p class="latest-label">Recent builds</p>
+        <ul class="arrow-list latest-list">
+          <li><span><a href="https://stephensironi.com">Stephen Sironi, painter</a><span class="build-note">My dad’s art portfolio</span></span></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -208,7 +209,6 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
     color: var(--ink);
     text-decoration: none;
   }
-  .project-card.is-soon { border-style: dashed; border-color: #9AA6BC; color: var(--ink-muted); }
   .project-bar { height: 10px; width: 64px; border-radius: 999px; }
   .project-name { font-family: var(--font-display); font-weight: 800; font-size: 28px; color: var(--ink); text-decoration: none; }
   a.project-name:hover { color: var(--accent-hover); }
@@ -223,6 +223,7 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
   .latest-list { gap: 6px; font-weight: 600; font-size: 16px; }
   .latest-list a { color: var(--ink); text-decoration: none; }
   .latest-list a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .build-note { display: block; font-weight: 400; font-size: 15px; color: var(--ink-soft); }
   .project-desc { color: var(--ink-soft); }
 
   .work { padding-bottom: 96px; }
