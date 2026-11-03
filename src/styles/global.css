@@ -129,7 +129,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
   text-decoration: none;
 }
 .site-name:hover { color: var(--ink); }
-.site-name .pizza { width: auto; height: 34px; transform: translateY(-6px); }
+.site-name .pizza { width: auto; height: 26px; }
 .site-nav { display: flex; flex-wrap: wrap; gap: 0 28px; font-weight: 600; font-size: 16px; }
 .site-nav a {
   color: var(--ink);
@@ -186,7 +186,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
 }
 .footer-about { flex: 1 1 300px; }
 .footer-about .site-name { color: var(--on-navy); font-size: 24px; }
-.footer-about .pizza { height: 36px; }
+.footer-about .pizza { height: 28px; }
 .footer-about p { margin: 8px 0 0; }
 .footer-col { flex: 0 1 260px; }
 .footer-label {
@@ -208,7 +208,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
   :root { --gutter: 20px; }
   body { font-size: 17px; }
   .peek { width: 110px; top: 44px; left: 6%; }
-  .site-name .pizza { height: 30px; }
+  .site-name .pizza { height: 24px; }
   .menu-toggle {
     display: inline-grid;
     place-items: center;
