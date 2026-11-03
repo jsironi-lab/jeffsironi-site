@@ -24,9 +24,32 @@ const links = [
     {site.name}
     <img class="pizza" src={onDark ? '/images/pizza-mark-cream.png' : '/images/pizza-mark.png'} alt="" width="238" height="200" />
   </a>
-  <nav class="site-nav" aria-label="Main">
+  <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7 H20 M4 12 H20 M4 17 H20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </button>
+  <nav class="site-nav" id="site-nav" aria-label="Main">
     {links.map((link) => (
       <a href={link.href} aria-current={link.current ? 'page' : undefined}>{link.label}</a>
     ))}
   </nav>
 </header>
+
+<script>
+  // On phones the links fold into a menu button, like Josh Comeau's site.
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+
+  function setOpen(open: boolean) {
+    header?.classList.toggle('is-open', open);
+    toggle?.setAttribute('aria-expanded', String(open));
+  }
+
+  toggle?.addEventListener('click', () => setOpen(!header?.classList.contains('is-open')));
+  header?.querySelectorAll('.site-nav a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', (event) => {
+    if (header && !header.contains(event.target as Node)) setOpen(false);
+  });
+</script>

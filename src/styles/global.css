@@ -139,6 +139,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
 }
 .site-nav a:hover { border-bottom-color: var(--ink); color: var(--ink); }
 .site-nav a[aria-current='page'] { border-bottom-color: var(--ink); }
+.menu-toggle { display: none; }
 
 /* Top band: light sky by default, dusk with stars and hills on the home page */
 .sky { position: relative; background: linear-gradient(180deg, #8FC8F3 0%, var(--sky) 45%, #CFE8FB 100%); }
@@ -147,7 +148,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
   color: var(--on-navy);
   background: linear-gradient(180deg, #121C3A 0%, #1E2D5C 48%, #4A4A7E 76%, #C97B5E 100%);
 }
-.sky > .site-header { position: relative; }
+.sky > .site-header { position: relative; z-index: 5; }
 .dusk .site-name, .dusk .site-name:hover, .dusk .site-nav a, .dusk .site-nav a:hover { color: var(--on-navy); }
 .dusk .site-nav a:hover, .dusk .site-nav a[aria-current='page'] { border-bottom-color: var(--on-navy); }
 .stars { position: absolute; inset: 0; width: 100%; height: 300px; fill: var(--on-navy); pointer-events: none; }
@@ -208,5 +209,37 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
   body { font-size: 17px; }
   .peek { width: 110px; top: 44px; left: 6%; }
   .site-name .pizza { height: 30px; }
-  .site-nav { gap: 0 20px; }
+  .menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .menu-toggle svg { width: 26px; height: 26px; }
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% - 8px);
+    left: var(--gutter);
+    right: var(--gutter);
+    flex-direction: column;
+    padding: 6px 20px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 14px 34px rgba(16, 24, 51, 0.28);
+  }
+  .site-header.is-open .site-nav { display: flex; }
+  .site-nav a, .dusk .site-nav a, .dusk .site-nav a:hover {
+    color: var(--ink);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--tile);
+  }
+  .site-nav a:last-child { border-bottom: 0; }
+  .site-nav a[aria-current='page'], .dusk .site-nav a[aria-current='page'] { border-bottom-color: var(--tile); color: var(--warm); }
 }
