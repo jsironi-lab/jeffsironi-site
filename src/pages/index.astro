@@ -257,7 +257,8 @@ const bookingHref = site.bookingUrl || mailto('Let’s find a time to chat');
       order: -1;
       align-self: flex-end;
       width: min(330px, 86%);
-      margin: 0 -8px -84px 0;
+      /* Bleeds off the right edge on purpose; the hero clips it. */
+      margin: 0 -72px -84px 0;
       -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 92%);
       mask-image: linear-gradient(to bottom, #000 62%, transparent 92%);
     }
