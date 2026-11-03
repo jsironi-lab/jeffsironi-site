@@ -6,9 +6,18 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  /** 'dusk' gives the top band the night-sky look used on the home page. */
+  top?: 'sky' | 'dusk';
 }
 
+const stars = [
+  [120, 60, 1.6, 0.8], [260, 130, 1.2, 0.6], [410, 40, 1.4, 0.7], [560, 110, 1, 0.5], [690, 70, 1.8, 0.8],
+  [820, 150, 1.2, 0.5], [940, 50, 1.4, 0.7], [1060, 120, 1, 0.6], [1180, 80, 1.6, 0.8], [340, 200, 1, 0.4],
+  [760, 230, 1, 0.4], [600, 20, 1.2, 0.6],
+];
+
 const {
+  top = 'sky',
   title = site.name,
   description = 'Jeff Sironi’s corner of the internet: helping people do cool things, mixtapes, and things that interest me.',
 } = Astro.props;
@@ -23,18 +32,23 @@ const {
   <meta name="description" content={description} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={new URL('/images/jeff-profile.jpg', Astro.site)} />
+  <meta property="og:image" content={new URL('/images/jeff-headshot.jpg', Astro.site)} />
   <meta name="theme-color" content="#A8D5F7" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;600&family=Permanent+Marker&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;600&family=Permanent+Marker&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="sky">
-    <NavBar />
+  <div class:list={['sky', { dusk: top === 'dusk' }]}>
+    {top === 'dusk' && (
+      <svg class="stars" viewBox="0 0 1280 300" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+        {stars.map(([cx, cy, r, o]) => <circle cx={cx} cy={cy} r={r} opacity={o} />)}
+      </svg>
+    )}
+    <NavBar onDark={top === 'dusk'} />
     <slot name="hero" />
   </div>
 
@@ -45,10 +59,10 @@ const {
   <div class="horizon" aria-hidden="true">
     <img class="peek" src="/images/jeff-sketch.png" alt="" width="900" height="1117" loading="lazy" />
     <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
-      <path d="M0 140 L1000 140 L1030 104 L1250 104 L1280 124 L1440 124 L1440 200 L0 200 Z" fill="#AFC9EC" />
-      <path d="M0 130 L700 130 L730 100 L900 100 L930 130 L1150 130 L1180 116 L1300 116 L1330 130 L1440 130 L1440 200 L0 200 Z" fill="var(--orange)" />
-      <path d="M0 160 L520 160 L550 142 L640 142 L670 160 L1440 160 L1440 200 L0 200 Z" fill="var(--green)" />
-      <path d="M0 182 L1440 182 L1440 200 L0 200 Z" fill="var(--navy-deep)" />
+      <path d="M0 150 C300 150 700 108 1000 112 S1300 120 1440 104 L1440 200 L0 200 Z" fill="#AFC9EC" />
+      <path d="M0 132 C200 128 420 128 640 142 S1000 152 1440 130 L1440 200 L0 200 Z" fill="var(--green)" />
+      <path d="M0 168 C300 154 700 174 1000 162 S1300 170 1440 158 L1440 200 L0 200 Z" fill="#6FAF63" />
+      <path d="M0 186 L1440 186 L1440 200 L0 200 Z" fill="var(--navy-deep)" />
     </svg>
   </div>
 

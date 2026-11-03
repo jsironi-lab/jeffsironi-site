@@ -16,12 +16,16 @@
   --ink-muted: #3D4A66;
   --on-navy: #FBEFD9;
   --on-navy-muted: #C9D8F0;
+  --tile: #EAF4FD;
+  --tile-strong: #DDEFFC;
+  --warm: #A84B17;
+  --glow: #E59A6B;
 
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --font-body: 'Instrument Sans', system-ui, sans-serif;
   --font-hand: 'Permanent Marker', cursive;
 
-  --wrap: 1200px;
+  --wrap: 1100px;
   --gutter: 32px;
 }
 
@@ -32,7 +36,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--cream);
+  background: #FFFFFF;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 18px;
@@ -55,7 +59,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
 }
 
 .section-title {
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(36px, 4.6vw, 56px);
   letter-spacing: -0.02em;
   line-height: 1;
@@ -90,6 +94,10 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
 .btn-outline { background: #FFFFFF; color: var(--ink); border-color: var(--ink); }
 .btn-outline:hover { background: var(--sky-soft); color: var(--ink); }
 .btn-ghost-navy { color: var(--on-navy-muted); border: 2px dashed var(--blue); }
+.btn-ink { background: var(--ink); color: #FFFFFF; }
+.btn-ink:hover { background: var(--navy-deep); color: #FFFFFF; }
+.btn-white { background: #FFFFFF; color: var(--ink); }
+.btn-white:hover { background: var(--tile); color: var(--ink); }
 
 .chip {
   display: inline-block;
@@ -115,7 +123,7 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
   align-items: center;
   gap: 6px;
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 22px;
   color: var(--ink);
   text-decoration: none;
@@ -132,27 +140,27 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
 .site-nav a:hover { border-bottom-color: var(--ink); color: var(--ink); }
 .site-nav a[aria-current='page'] { border-bottom-color: var(--ink); }
 
-/* Sky band and desert scene */
-.sky { background: linear-gradient(180deg, #8FC8F3 0%, var(--sky) 45%, #CFE8FB 100%); }
-.desert { height: 300px; position: relative; overflow: hidden; margin-top: 48px; }
-.desert svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.desert [data-depth] { will-change: transform; }
-.birds {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: min(560px, 55%);
-  height: auto;
-  opacity: 0.75;
-  pointer-events: none;
+/* Top band: light sky by default, dusk with stars and hills on the home page */
+.sky { position: relative; background: linear-gradient(180deg, #8FC8F3 0%, var(--sky) 45%, #CFE8FB 100%); }
+.sky.dusk {
+  overflow: hidden;
+  color: var(--on-navy);
+  background: linear-gradient(180deg, #121C3A 0%, #1E2D5C 48%, #4A4A7E 76%, #C97B5E 100%);
 }
+.sky > .site-header { position: relative; }
+.dusk .site-name, .dusk .site-name:hover, .dusk .site-nav a, .dusk .site-nav a:hover { color: var(--on-navy); }
+.dusk .site-nav a:hover, .dusk .site-nav a[aria-current='page'] { border-bottom-color: var(--on-navy); }
+.stars { position: absolute; inset: 0; width: 100%; height: 300px; fill: var(--on-navy); pointer-events: none; }
+.hills { position: absolute; left: 0; right: 0; bottom: 0; height: clamp(150px, 20vw, 280px); z-index: 2; pointer-events: none; }
+.hills svg { width: 100%; height: 100%; display: block; }
+.hills [data-depth] { will-change: transform; }
 
-/* Footer: the page fades back into sky, with a pen-drawn Jeff peeking over the desert */
+/* Footer: the page fades back into sky, with a pen-drawn Jeff peeking over the hills */
 .horizon {
   position: relative;
   height: 200px;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--cream) 0%, #CFE8FB 45%, var(--sky) 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #CFE8FB 45%, var(--sky) 100%);
 }
 .horizon svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .peek {
@@ -198,7 +206,6 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; }
 @media (max-width: 640px) {
   :root { --gutter: 20px; }
   body { font-size: 17px; }
-  .desert { height: 180px; margin-top: 40px; }
   .peek { width: 110px; top: 44px; left: 6%; }
   .site-name .pizza { height: 30px; }
   .site-nav { gap: 0 20px; }

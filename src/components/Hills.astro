@@ -1,0 +1,41 @@
+---
+// Dusk hills that close out the home page hero: a back ridge catching the last light,
+// then two darker hills sitting on a flat base. The back layers drift a little as the
+// page scrolls (unless reduced motion is on).
+const back = 'M0 150 C200 70 380 72 560 120 S900 50 1080 100 S1330 70 1440 96';
+---
+
+<div class="hills" aria-hidden="true">
+  <svg viewBox="0 0 1440 280" preserveAspectRatio="none">
+    <defs>
+      <filter id="ridge-glow" x="-5%" y="-50%" width="110%" height="200%">
+        <feGaussianBlur stdDeviation="6" />
+      </filter>
+    </defs>
+    <g data-depth="0.25">
+      <path d={`${back} L1440 280 L0 280 Z`} fill="#2A3768" />
+      <path d={back} fill="none" stroke="var(--glow)" stroke-width="10" opacity="0.45" filter="url(#ridge-glow)" />
+    </g>
+    <path data-depth="0.1" d="M0 200 C220 130 440 136 640 180 S1000 116 1210 160 S1390 146 1440 150 L1440 280 L0 280 Z" fill="#1A2550" />
+    <path d="M0 250 C260 214 540 212 780 238 S1220 220 1440 230 L1440 280 L0 280 Z" fill="#101833" />
+  </svg>
+</div>
+
+<script>
+  const parts = document.querySelectorAll<SVGElement>('.hills [data-depth]');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let queued = false;
+
+  function drift() {
+    queued = false;
+    const y = still.matches ? 0 : Math.min(window.scrollY, 900);
+    parts.forEach((part) => {
+      part.style.transform = `translateY(${y * Number(part.dataset.depth) * 0.25}px)`;
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!queued) { queued = true; requestAnimationFrame(drift); }
+  }, { passive: true });
+  drift();
+</script>
