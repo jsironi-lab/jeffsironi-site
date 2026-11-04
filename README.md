@@ -28,3 +28,17 @@ Then open http://localhost:4321.
 
 Copy one of the files in `src/content/mixtapes/`, give it the next number, and update the fields.
 Tapes sit on the rack in number order, and the newest one is shown by default as "Latest tape".
+
+## Backlog
+
+- **SEO: show up first when people search "Jeff Sironi".**
+  - Add structured data (a JSON-LD `Person` block) with name, photo, location and `sameAs` links to
+    LinkedIn and other profiles.
+  - Add a sitemap and a `robots.txt`.
+  - Verify the site in Google Search Console and submit the sitemap.
+  - Link to jeffsironi.com from LinkedIn and other profiles, and from stephensironi.com.
+  - Check page titles and descriptions say "Jeff Sironi" clearly.
+- **Restyle the mixtapes page to match the home page.** Dusk or calmer header, white page, pale tiles
+  instead of thick outlines, lighter headings. Decide how much of the wooden tape rack to keep.
+- Swap in a larger, waist-up photo for the home page hero when one is available.
+- Maybe: make the header stick to the top of the screen on phones, like Josh Comeau's site.

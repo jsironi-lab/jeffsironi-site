@@ -16,6 +16,18 @@ const stars = [
   [760, 230, 1, 0.4], [600, 20, 1.2, 0.6],
 ];
 
+// Tells search engines who this site is about, so it can show up for "Jeff Sironi".
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: new URL('/', Astro.site).href,
+  image: new URL('/images/jeff-headshot.jpg', Astro.site).href,
+  email: `mailto:${site.email}`,
+  address: { '@type': 'PostalAddress', addressRegion: 'OH', addressCountry: 'US' },
+  sameAs: [site.linkedin],
+};
+
 const {
   top = 'sky',
   title = site.name,
@@ -30,6 +42,9 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={new URL('/images/jeff-headshot.jpg', Astro.site)} />
