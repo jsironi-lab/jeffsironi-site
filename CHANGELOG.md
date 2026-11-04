@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed (2026-11-04)
+- Upgraded Astro 4.16 to 7.4.5 and `@astrojs/sitemap` to 3.7.4, pinned to exact versions.
+- Mixtapes and blog collections use the content loader API (`src/content.config.ts`).
+- CI builds on Node 24 and runs `astro check` before building.
+- Dependabot opens monthly pull requests for npm and GitHub Actions updates.
+
+### Removed (2026-11-04)
+- Tailwind and its config. It was installed but never wired up; all styling is in `src/styles/global.css`.
+
 ### Added
 - Initial project folder structure (2026-02-03)
   - assets/ (css, js, images, fonts)

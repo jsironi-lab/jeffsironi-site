@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Hills from '../../components/Hills.astro';
 
@@ -14,7 +14,7 @@ const colors = {
 const entries = (await getCollection('mixtapes')).sort((a, b) => a.data.number - b.data.number);
 const tapes = await Promise.all(
   entries.map(async (entry) => {
-    const { Content } = await entry.render();
+    const { Content } = await render(entry);
     const code = `JMT-${String(entry.data.number).padStart(3, '0')}`;
     const embed = entry.data.spotify.replace('open.spotify.com/', 'open.spotify.com/embed/').split('?')[0];
     return { ...entry.data, Content, code, id: code.toLowerCase(), embed, color: colors[entry.data.color] };
