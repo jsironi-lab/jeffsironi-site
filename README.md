@@ -34,7 +34,4 @@ Tapes sit on the rack in number order, and the newest one is shown by default as
 - **SEO: show up first when people search "Jeff Sironi".** Done Nov 4, 2026: structured data, sitemap,
   `robots.txt`, Search Console verified with the sitemap submitted, and LinkedIn links to the site.
   Still open: check rankings in a couple of weeks, and maybe link to jeffsironi.com from stephensironi.com.
-- **Restyle the mixtapes page to match the home page.** Dusk or calmer header, white page, pale tiles
-  instead of thick outlines, lighter headings. Decide how much of the wooden tape rack to keep.
 - Swap in a larger, waist-up photo for the home page hero when one is available.
-- Maybe: make the header stick to the top of the screen on phones, like Josh Comeau's site.
