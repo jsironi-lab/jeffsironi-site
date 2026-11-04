@@ -31,13 +31,9 @@ Tapes sit on the rack in number order, and the newest one is shown by default as
 
 ## Backlog
 
-- **SEO: show up first when people search "Jeff Sironi".**
-  - Add structured data (a JSON-LD `Person` block) with name, photo, location and `sameAs` links to
-    LinkedIn and other profiles.
-  - Add a sitemap and a `robots.txt`.
-  - Verify the site in Google Search Console and submit the sitemap.
-  - Link to jeffsironi.com from LinkedIn and other profiles, and from stephensironi.com.
-  - Check page titles and descriptions say "Jeff Sironi" clearly.
+- **SEO: show up first when people search "Jeff Sironi".** Done Nov 4, 2026: structured data, sitemap,
+  `robots.txt`, Search Console verified with the sitemap submitted, and LinkedIn links to the site.
+  Still open: check rankings in a couple of weeks, and maybe link to jeffsironi.com from stephensironi.com.
 - **Restyle the mixtapes page to match the home page.** Dusk or calmer header, white page, pale tiles
   instead of thick outlines, lighter headings. Decide how much of the wooden tape rack to keep.
 - Swap in a larger, waist-up photo for the home page hero when one is available.
