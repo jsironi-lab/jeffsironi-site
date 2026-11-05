@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Keep photos of Jeff out of Google Images and out of search-result thumbnails.
+User-agent: Googlebot-Image
+Disallow: /images/jeff-
+
 Sitemap: https://jeffsironi.com/sitemap-index.xml

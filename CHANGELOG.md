@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed (2026-11-05)
+- Search appearance: description is now "My corner of the internet."; no photo in search results
+  (`max-image-preview:none`, headshot dropped from structured data, Googlebot-Image blocked from
+  `/images/jeff-*`); link previews use the pizza instead of the headshot.
+- Added `/favicon.ico` (48px pizza), `WebSite` structured data for the site name, and fuller
+  Open Graph tags (`og:url`, `og:type`, `og:site_name`, `twitter:card`).
+
 ### Changed (2026-11-04)
 - Upgraded Astro 4.16 to 7.4.5 and `@astrojs/sitemap` to 3.7.4, pinned to exact versions.
 - Mixtapes and blog collections use the content loader API (`src/content.config.ts`).

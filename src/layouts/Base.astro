@@ -17,21 +17,35 @@ const stars = [
 ];
 
 // Tells search engines who this site is about, so it can show up for "Jeff Sironi".
-const person = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: site.name,
-  url: new URL('/', Astro.site).href,
-  image: new URL('/images/jeff-headshot.jpg', Astro.site).href,
-  email: `mailto:${site.email}`,
-  address: { '@type': 'PostalAddress', addressRegion: 'OH', addressCountry: 'US' },
-  sameAs: [site.linkedin],
-};
+// No photo on purpose: it keeps Google from showing a headshot next to the result.
+// The WebSite entry gives Google the site name to show in place of the bare domain.
+const home = new URL('/', Astro.site).href;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: home,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: home,
+    email: `mailto:${site.email}`,
+    address: { '@type': 'PostalAddress', addressRegion: 'OH', addressCountry: 'US' },
+    sameAs: [site.linkedin],
+  },
+];
+
+// Link previews (iMessage, LinkedIn, Slack) use the pizza, not a photo.
+const shareImage = new URL('/images/pizza.png', Astro.site).href;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
 const {
   top = 'sky',
   title = site.name,
-  description = 'Jeff Sironi’s corner of the internet: helping people do cool things, mixtapes, and things that interest me.',
+  description = 'My corner of the internet.',
 } = Astro.props;
 ---
 
@@ -42,13 +56,23 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  <!-- max-image-preview:none: no image thumbnail beside this site in Google results. -->
+  <meta name="robots" content="max-image-preview:none" />
+  <link rel="canonical" href={canonical} />
   <link rel="sitemap" href="/sitemap-index.xml" />
-  {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
+  {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={site.name} />
+  <meta property="og:url" content={canonical} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={new URL('/images/jeff-headshot.jpg', Astro.site)} />
+  <meta property="og:image" content={shareImage} />
+  <meta property="og:image:width" content="714" />
+  <meta property="og:image:height" content="600" />
+  <meta property="og:image:alt" content="A hand-drawn slice of pizza" />
+  <meta name="twitter:card" content="summary" />
   <meta name="theme-color" content={top === 'dusk' ? '#121C3A' : '#A8D5F7'} />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
